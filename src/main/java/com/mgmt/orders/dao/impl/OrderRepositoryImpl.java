@@ -1,6 +1,7 @@
 package com.mgmt.orders.dao.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
@@ -22,13 +23,15 @@ public class OrderRepositoryImpl implements OrderRepository {
             order.setOrderId(orderId);
             order.setOrderAmount(500);
             order.setUserId((orderId % 2) + 1);
+            order.setOrderDate(new Date());
             this.orders.add(order);
         });
     }
 
     @Override
     public List<Order> findAllByUserId(Long userId) {
-        return this.orders.stream().filter(order -> order.getUserId().equals(userId)).collect(Collectors.toList());
+        List<Order> filteredOrders = this.orders.stream().filter(order -> order.getUserId().equals(userId)).collect(Collectors.toList());
+        return filteredOrders;
     }
 
 }
